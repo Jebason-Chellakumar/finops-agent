@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "finops-agent"
+version = "0.1.0"
+description = "Multi-agent FinOps assistant for AWS costs, built on Claude"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = ["anthropic>=1.0"]
+
+[project.optional-dependencies]
+aws = ["boto3>=1.34"]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[project.scripts]
+finops = "finops.cli:main"
+
+[tool.setuptools]
+packages = ["finops"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 115
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["B905"]  # zip(strict=) is 3.10+; the analysis core also runs on 3.9
